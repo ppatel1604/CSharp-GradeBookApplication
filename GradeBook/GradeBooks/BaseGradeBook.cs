@@ -172,21 +172,21 @@ namespace GradeBook.GradeBooks
             }
 
             //#todo refactor into it's own method with calculations performed here
-            Console.WriteLine("Average Grade of all students is " + (allStudentsPoints / Students.Count));
+            Console.WriteLine("Average Grade of all students is " + allStudentsPoints / Students.Count);
             if (campusPoints != 0)
-                Console.WriteLine("Average for only local students is " + (campusPoints / Students.Where(e => e.Enrollment == EnrollmentType.Campus).Count()));
+                Console.WriteLine("Average for only local students is " + campusPoints / Students.Count(e => e.Enrollment == EnrollmentType.Campus));
             if (statePoints != 0)
-                Console.WriteLine("Average for only state students (excluding local) is " + (statePoints / Students.Where(e => e.Enrollment == EnrollmentType.State).Count()));
+                Console.WriteLine("Average for only state students (excluding local) is " + statePoints / Students.Count(e => e.Enrollment == EnrollmentType.State));
             if (nationalPoints != 0)
-                Console.WriteLine("Average for only national students (excluding state and local) is " + (nationalPoints / Students.Where(e => e.Enrollment == EnrollmentType.National).Count()));
+                Console.WriteLine("Average for only national students (excluding state and local) is " + nationalPoints / Students.Count(e => e.Enrollment == EnrollmentType.National));
             if (internationalPoints != 0)
-                Console.WriteLine("Average for only international students is " + (internationalPoints / Students.Where(e => e.Enrollment == EnrollmentType.International).Count()));
+                Console.WriteLine("Average for only international students is " + internationalPoints / Students.Count(e => e.Enrollment == EnrollmentType.International));
             if (standardPoints != 0)
-                Console.WriteLine("Average for students excluding honors and duel enrollment is " + (standardPoints / Students.Where(e => e.Type == StudentType.Standard).Count()));
+                Console.WriteLine("Average for students excluding honors and duel enrollment is " + standardPoints / Students.Count(e => e.Type == StudentType.Standard));
             if (honorPoints != 0)
-                Console.WriteLine("Average for only honors students is " + (honorPoints / Students.Where(e => e.Type == StudentType.Honors).Count()));
+                Console.WriteLine("Average for only honors students is " + honorPoints / Students.Count(e => e.Type == StudentType.Honors));
             if (dualEnrolledPoints != 0)
-                Console.WriteLine("Average for only duel enrolled students is " + (dualEnrolledPoints / Students.Where(e => e.Type == StudentType.DualEnrolled).Count()));
+                Console.WriteLine("Average for only duel enrolled students is " + dualEnrolledPoints / Students.Count(e => e.Type == StudentType.DualEnrolled));
         }
 
         public virtual void CalculateStudentStatistics(string name)
@@ -204,18 +204,12 @@ namespace GradeBook.GradeBooks
             }
         }
 
-        public virtual char GetLetterGrade(double averageGrade)
+        protected virtual char GetLetterGrade(double averageGrade)
         {
-            if (averageGrade >= 90)
-                return 'A';
-            else if (averageGrade >= 80)
-                return 'B';
-            else if (averageGrade >= 70)
-                return 'C';
-            else if (averageGrade >= 60)
-                return 'D';
-            else
-                return 'F';
+            return averageGrade >= 90 ? 'A' :
+                averageGrade >= 80 ? 'B' :
+                averageGrade >= 70 ? 'C' :
+                averageGrade >= 60 ? 'D' : 'F';
         }
 
         /// <summary>
