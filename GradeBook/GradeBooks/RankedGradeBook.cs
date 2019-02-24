@@ -24,8 +24,7 @@ namespace GradeBook.GradeBooks
             return grades[threshold - 1] <= averageGrade ? 'A' :
                 grades[(threshold * 2) - 1] <= averageGrade ? 'B' : 
                 grades[(threshold * 3) - 1] <= averageGrade ? 'C' : 
-                grades[(threshold * 4) - 1] <= averageGrade ? 'D' : 
-                base.GetLetterGrade(averageGrade);
+                grades[(threshold * 4) - 1] <= averageGrade ? 'D' :  'F';
         }
     }
 }
